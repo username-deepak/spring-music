@@ -6,4 +6,5 @@ version=`cat version/number`
 cd music-repo
 #echo $version
 gradle assemble -PVersion=$version
+mv build/libs/spring-music-*.war ../build/
 #ls build/libs/
