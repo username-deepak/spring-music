@@ -9,7 +9,7 @@ inputs:
 
 outputs:
   - name: music-repo
-    path: music-repo  
+    path: music-repo/build  
 
 run:
   path: music-repo/ci/tasks/build-artifact.sh
