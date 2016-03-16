@@ -63,19 +63,28 @@ Basically it just runs "gradle test" against the music-repo
 
 * fly command line dance
 
-  * ```fly save-target --api https://example.com --username my-user
---password my-password my-target```
+  * Login to the concourse and create a target
+    ```
+    fly --target shaozhen login --concourse-url 'http://10.65.192.249:8080'  
+    ```
 
   * Configure the cloudfoundry target environment in [spring-music.yml](spring-music.yml)
     E.g.
 
     ```
-    API_ENDPOINT: api.10.65.233.228.xip.io
+    API_ENDPOINT: api.10.65.192.249.xip.io
     USERNAME: admin
     PASSWORD: admin
     ORG: test-org
     SPACE: prod
     HOST: music
     ```
-    
-  * ```fly -t my-target configure --config spring-music.yml --var "music_private_key=$(cat PRIVATE_KEY_FOR_GITHUB)" --var s3-access-key-id=YOUR_S3_ACCESS_KEY_ID --var s3-secret-access-key=YOUR_S3_ACCESS_KEY --paused=false spring-music```
+
+  * Upload the pipeline configure
+
+    ```
+    fly -t shaozhen set-pipeline --pipeline spring-music-pipeline --config ci/spring-music.yml \
+                                 --var "music_private_key=$(cat /Users/sding/work/pipeline/music_key)" \
+                                 --var s3-access-key-id={PROVIDE_YOUR_KEY} \
+                                 --var s3-secret-access-key={PROVIDE_YOUR_ACCESS_KEY}
+    ```

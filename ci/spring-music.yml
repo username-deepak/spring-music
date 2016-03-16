@@ -63,19 +63,17 @@ jobs:
       trigger: true
   - task: deploy-to-cats
     file: music-repo/ci/tasks/cf-deployment.yml
-    config:
-      params:
-        API_ENDPOINT: api.10.65.233.228.xip.io
-        USERNAME: admin
-        PASSWORD: admin
-        ORG: test-org
-        SPACE: cats
-        HOST: music-cats
+    params:
+      API_ENDPOINT: api.10.65.192.249.xip.io
+      USERNAME: admin
+      PASSWORD: admin
+      ORG: test-org
+      SPACE: cats
+      HOST: music-cats
   - task: cats
     file: music-repo/ci/tasks/cats.yml
-    config:
-      params:
-        MUSIC_URL: http://music-cats.10.65.233.228.xip.io
+    params:
+      MUSIC_URL: http://music-cats.10.65.192.249.xip.io
 
 - name: promote-to-uat
   plan:
@@ -88,14 +86,13 @@ jobs:
       trigger: true
   - task: deploy-to-uat
     file: music-repo/ci/tasks/cf-deployment.yml
-    config:
-      params:
-        API_ENDPOINT: api.10.65.233.228.xip.io
-        USERNAME: admin
-        PASSWORD: admin
-        ORG: test-org
-        SPACE: uat
-        HOST: music-uat
+    params:
+      API_ENDPOINT: api.10.65.192.249.xip.io
+      USERNAME: admin
+      PASSWORD: admin
+      ORG: test-org
+      SPACE: uat
+      HOST: music-uat
 
 - name: manual-deploy-to-prod
   serial: true
@@ -107,11 +104,10 @@ jobs:
       passed: [promote-to-uat]
   - task: deploy-to-prod
     file: music-repo/ci/tasks/cf-deployment.yml
-    config:
-      params:
-        API_ENDPOINT: api.10.65.233.228.xip.io
-        USERNAME: admin
-        PASSWORD: admin
-        ORG: test-org
-        SPACE: prod
-        HOST: music
+    params:
+      API_ENDPOINT: api.10.65.192.249.xip.io
+      USERNAME: admin
+      PASSWORD: admin
+      ORG: test-org
+      SPACE: prod
+      HOST: music
