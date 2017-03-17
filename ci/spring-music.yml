@@ -22,7 +22,15 @@ resources:
     regexp: spring-music-(.*).war
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
-
+- name: cf-uat
+  type: cf
+  source:
+    api: {{cf-api-uat}}
+    organization: {{uat-organization}}
+    username: {{deploy-uat-username}}
+    password: {{deploy-uat-password}}
+    skip_cert_check: true
+    space: {{uat-space}}
 
 jobs:
 - name: unit
@@ -67,3 +75,7 @@ jobs:
     - get: version
   - task: prepare-app-manifest
     file: music-repo/ci/tasks/app-manifest-prep.yml
+  - put: cf-uat
+    params:
+      manifest: app-manifest-output/manifest.yml
+      path: music-repo/music-release/
