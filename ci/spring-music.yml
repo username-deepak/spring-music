@@ -78,4 +78,3 @@ jobs:
   - put: cf-uat
     params:
       manifest: app-manifest-output/manifest.yml
-      path: music-release/
