@@ -64,5 +64,6 @@ jobs:
     - get: music-repo
       passed: [build-binary]
       trigger: true
+    - get: version
   - task: prepare-app-manifest
     file: music-repo/ci/tasks/app-manifest-prep.yml
