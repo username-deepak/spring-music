@@ -2,14 +2,14 @@ resources:
 - name: music-repo
   type: git
   source:
-    uri: git@github.com:datianshi/spring-music.git
+    uri: git@github.com:DaxterM/spring-music.git
     branch: master
     private_key: {{music_private_key}}
 
 - name: version
   type: semver
   source:
-    bucket: music-pipeline-artifacts
+    bucket: {{music-pipeline-artifacts-bucket}}
     key: current-version
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
@@ -18,10 +18,11 @@ resources:
 - name: music-release
   type: s3
   source:
-    bucket: music-pipeline-artifacts
+    bucket: {{music-pipeline-artifacts-bucket}}
     regexp: spring-music-(.*).war
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
+
 
 jobs:
 - name: unit
@@ -52,62 +53,16 @@ jobs:
   - put: version
     params: {file: version/number}
 
-- name: acceptance-tests
-  plan:
-  - aggregate:
-    - get: music-release
-      passed: [build-binary]
-      trigger: true
-    - get: music-repo
-      passed: [build-binary]
-      trigger: true
-  - task: deploy-to-cats
-    file: music-repo/ci/tasks/cf-deployment.yml
-    params:
-      API_ENDPOINT: api.10.65.192.249.xip.io
-      USERNAME: admin
-      PASSWORD: admin
-      ORG: test-org
-      SPACE: cats
-      HOST: music-cats
-  - task: cats
-    file: music-repo/ci/tasks/cats.yml
-    params:
-      MUSIC_URL: http://music-cats.10.65.192.249.xip.io
-
-- name: promote-to-uat
-  plan:
-  - aggregate:
-    - get: music-release
-      passed: [acceptance-tests]
-      trigger: true
-    - get: music-repo
-      passed: [acceptance-tests]
-      trigger: true
-  - task: deploy-to-uat
-    file: music-repo/ci/tasks/cf-deployment.yml
-    params:
-      API_ENDPOINT: api.10.65.192.249.xip.io
-      USERNAME: admin
-      PASSWORD: admin
-      ORG: test-org
-      SPACE: uat
-      HOST: music-uat
-
-- name: manual-deploy-to-prod
+- name: deploy-app
   serial: true
+  public: true
   plan:
   - aggregate:
     - get: music-release
-      passed: [promote-to-uat]
+      passed: [build-binary]
+      trigger: true
     - get: music-repo
-      passed: [promote-to-uat]
-  - task: deploy-to-prod
-    file: music-repo/ci/tasks/cf-deployment.yml
-    params:
-      API_ENDPOINT: api.10.65.192.249.xip.io
-      USERNAME: admin
-      PASSWORD: admin
-      ORG: test-org
-      SPACE: prod
-      HOST: music
+      passed: [build-binary]
+      trigger: true
+  - task: prepare-app-manifest
+    file: music-repo/ci/tasks/app-manifest-prep.yml
