@@ -16,4 +16,4 @@ outputs:
 - name: app-manifest-output
 
 run:
-  path: music-repo/ci/tasks/app-manifest-prep
+  path: music-repo/ci/tasks/app-manifest-prep.sh
