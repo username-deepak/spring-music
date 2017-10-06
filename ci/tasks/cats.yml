@@ -1,7 +1,7 @@
 ---
 platform: linux
 
-mage_resource:
+image_resource:
   type: docker-image
   source:
     repository: datianshi/cf-cli
