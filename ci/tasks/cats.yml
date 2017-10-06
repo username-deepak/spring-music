@@ -1,7 +1,11 @@
 ---
 platform: linux
 
-image: docker:///datianshi/cf-cli
+mage_resource:
+  type: docker-image
+  source:
+    repository: datianshi/cf-cli
+    tag: "latest"
 
 inputs:
   - name: music-repo
