@@ -9,4 +9,4 @@ then
   echo "Expect status code from $MUSIC_URL as 200, but got $status_code"
   exit 1
 fi
-echo "$MUSIC_URL Reteruned a 200 response"
+echo "$MUSIC_URL Returned a 200 response"
