@@ -1,0 +1,15 @@
+resources:
+- name: music-repo
+  type: git
+  source:
+    uri: git@github.com:DaxterM/spring-music.git
+    branch: master
+    private_key: {{music_private_key}}
+
+jobs:
+- name: unit
+  plan:
+  - get: music-repo
+    trigger: true
+  - task: unit
+    file: music-repo/ci/tasks/unit.yml
