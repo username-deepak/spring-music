@@ -11,4 +11,4 @@ jobs:
   - get: git-repo
     trigger: true
   - task: unit-test
-    file: music-repo/ci/tasks/unit-test.yml
+    file: git-repo/ci/tasks/unit-test.yml
