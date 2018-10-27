@@ -10,5 +10,5 @@ jobs:
   plan:
   - get: git-repo
     trigger: true
-  - task: unit-test
+  - task: run-unit-test
     file: git-repo/ci/tasks/unit-test.yml

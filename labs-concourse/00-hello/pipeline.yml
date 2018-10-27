@@ -8,8 +8,7 @@ resources:
 
 jobs:
 - name: hello-world-job
-  public: true
   plan:
   - get: git-repo
-  - task: task_print-hello-world
+  - task: print-hello-world
     file: git-repo/ci/tasks/hello-world.yml 
