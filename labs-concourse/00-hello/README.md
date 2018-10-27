@@ -2,7 +2,7 @@
 
 The purpose of this lab is to introduce you to the `fly` CLI and verfy that you can connect and issue commands to your instance of Concourse.
 
-## The pipeline.yml
+## Review the pipeline.yml
 
 In this folder we have a `pipeline.yml` file.  Open it in your favorite editor (vi) and review the contents.
 

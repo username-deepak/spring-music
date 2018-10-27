@@ -8,9 +8,9 @@ image_resource:
     tag: 8-jdk
 
 inputs:
-  - name: repo
+  - name: git-repo
 
 run:
   path: /bin/bash
   args:
-    - repo/ci/tasks/unit.sh
+    - git-repo/ci/tasks/unit.sh

@@ -1,5 +1,5 @@
 resources:
-- name: music-repo
+- name: git-repo
   type: git
   source:
     uri: https://github.com/((username))/spring-music
@@ -8,7 +8,7 @@ resources:
 jobs:
 - name: unit-test
   plan:
-  - get: music-repo
+  - get: git-repo
     trigger: true
   - task: unit-test
     file: music-repo/ci/tasks/unit-test.yml

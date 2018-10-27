@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-cd repo
+cd git-repo
 ./gradlew -v
 ./gradlew test
