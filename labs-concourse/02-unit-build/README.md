@@ -30,6 +30,20 @@ Now lets update the existing pipeline with our updates:
 fly -t main set-pipeline -p spring-music -c pipeline.yml -v username=<your username> -l credentials.yml
 ```
 
-The additional `-l` parameter allows for loading multiple parameter values from exteranl files.  You may have more than one of these parameter files.  Parameter files that contain secrets should be careful managed as to not leak these credentials to others.  FYI - Concourse has additional features that allow it to integrate with Credhub allowing secrets to be managed indpendently of the pipeline setup.
+The additional `-l` parameter allows for loading multiple parameter values from exteranl files.  You may have more than one of these parameter files.  Parameter files that contain secrets should be careful managed as to not leak these credentials to others[*].
 
-...
+After you apply the changes, review the pipeline.  The additional job should trigger automatically and, if all goes well, turn green.  This time, the pipeline did not need to re-execute from the beginning because the state of the previous job was successful.
+
+Note however, that there are no new files in the Minio bucket.  This is because we haven't done anything with the output if this job.  We'll address this in the next lab.
+
+## Extra Credit
+
+Set the initial version to something other than 1.0.0 - say 2.1.5.
+
+## Extra Extra Credit
+
+Parameterize the version so it can be passed via the fly command line.
+
+
+
+[*] See https://concourse-ci.org/creds.html for a deeper discussion about options for managing credentials external to Concourse.
