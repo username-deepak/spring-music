@@ -1,0 +1,34 @@
+resources:
+- name: git-repo
+  type: git
+  source:
+    uri: https://github.com/((username))/spring-music
+    branch: master
+- name: version
+  type: semver
+  source:
+    key: current-version
+    endpoint: ((s3-endpoint))
+    access_key_id: ((s3-access-key-id))
+    secret_access_key: ((s3-secret-access-key))
+    bucket: ((pipeline-artifacts-bucket))
+    initial_version: 1.0.0
+
+jobs:
+- name: unit-test
+  plan:
+  - get: git-repo
+    trigger: true
+  - task: run-unit-test
+    file: git-repo/ci/tasks/unit-test.yml
+- name: build-binary
+  serial: true
+  plan:
+  - get: git-repo
+    passed: [unit-test]
+    trigger: true
+  - get: version
+    params: { bump: patch }
+  - task: build-artifact
+    file: music-repo/ci/tasks/build-artifact.yml
+    timeout: 5m
