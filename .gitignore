@@ -17,5 +17,6 @@ target/
 *credentials*.yml
 .gradle
 build/
+bin/
 
 *.log*
