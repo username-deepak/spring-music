@@ -13,4 +13,4 @@ inputs:
 run:
   path: /bin/bash
   args:
-    - git-repo/ci/tasks/unit.sh
+    - git-repo/ci/tasks/unit-test.sh
