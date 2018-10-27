@@ -1,7 +1,13 @@
 #!/bin/bash
 
 set -xe
-Version=`cat version/number`
 
+version=`cat version/number`
+#echo $version
 
-echo -e "applications: \n- name: Spring-Music-CIDemo \n  memory: 1G \n  random-route: true \n  path: /tmp/build/put/music-release/spring-music-$Version.war" > app-manifest-output/manifest.yml
+cat > app-manifest-output/manifest.yml << EOF
+name: Spring-Music-CIDemo
+memory: 1G
+random-route: true
+path: /tmp/build/put/music-release/spring-music-${version}.war
+EOF

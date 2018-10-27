@@ -2,9 +2,9 @@
 set -e
 
 version=`cat version/number`
+#echo $version
 
 cd git-repo
-#echo $version
 export TERM=${TERM:-dumb} && ./gradlew assemble -PVersion=$version
-mv build/libs/spring-music-*.war ../build/
 #ls build/libs/
+mv build/libs/spring-music-*.war ../build/

@@ -1,0 +1,72 @@
+resources:
+- name: git-repo
+  type: git
+  source:
+    uri: https://github.com/((username))/spring-music
+    branch: master
+- name: version
+  type: semver
+  source:
+    endpoint: ((s3-endpoint))
+    access_key_id: ((s3-access-key-id))
+    secret_access_key: ((s3-secret-access-key))
+    bucket: ((pipeline-artifacts-bucket))
+    key: current-version
+    initial_version: 1.0.0
+- name: music-release
+  type: s3
+  source:
+    endpoint: ((s3-endpoint))
+    access_key_id: ((s3-access-key-id))
+    secret_access_key: ((s3-secret-access-key))
+    bucket: ((pipeline-artifacts-bucket))
+    regexp: spring-music-(.*).war
+- name: cf-push
+  type: cf
+  source:
+    api: ((cf-api))
+    username: ((cf-username))
+    password: ((cf-password))
+    organization: ((cf-organization))
+    space: ((cf-space))
+    skip_cert_check: true
+
+jobs:
+- name: unit-test
+  plan:
+  - get: git-repo
+    trigger: true
+  - task: run-unit-test
+    file: git-repo/ci/tasks/unit-test.yml
+- name: build-binary
+  serial: true
+  plan:
+  - get: git-repo
+    passed: [unit-test]
+    trigger: true
+  - get: version
+    params: { bump: patch }
+  - task: build-artifact
+    file: git-repo/ci/tasks/build-artifact.yml
+    timeout: 5m
+  - put: music-release
+    params:
+      file: build/spring-music-*.war
+  - put: version
+    params: { file: version/number }
+- name: deploy-to-dev
+  serial: true
+  plan:
+  - aggregate:
+    - get: music-release
+      passed: [build-binary]
+      trigger: true
+    - get: git-repo
+      passed: [build-binary]
+      trigger: true
+    - get: version
+  - task: prepare-app-manifest
+    file: git-repo/ci/tasks/app-manifest-prep.yml
+  - put: cf-push
+    params:
+      manifest: app-manifest-output/manifest.yml
