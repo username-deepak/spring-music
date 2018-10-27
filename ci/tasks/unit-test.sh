@@ -2,5 +2,5 @@
 set -e
 
 cd git-repo
-./gradlew -v
-./gradlew test
+export TERM=${TERM:-dumb} && ./gradlew -v
+export TERM=${TERM:-dumb} && ./gradlew clean test
