@@ -6,6 +6,7 @@ version=`cat version/number`
 #echo $version
 
 cat > app-manifest-output/manifest.yml << EOF
+---
 applications:
 - name: Spring-Music-CIDemo
   memory: 1G
