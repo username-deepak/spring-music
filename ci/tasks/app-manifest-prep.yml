@@ -8,7 +8,7 @@ image_resource:
     tag: latest
 
 inputs:
-  - name: music-repo
+  - name: git-repo
   - name: music-release
   - name: version
 
@@ -16,4 +16,4 @@ outputs:
   - name: app-manifest-output
 
 run:
-  path: music-repo/ci/tasks/app-manifest-prep.sh
+  path: git-repo/ci/tasks/app-manifest-prep.sh

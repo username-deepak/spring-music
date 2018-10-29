@@ -9,5 +9,6 @@ cat > app-manifest-output/manifest.yml << EOF
 name: Spring-Music-CIDemo
 memory: 1G
 random-route: true
-path: /tmp/build/put/music-release/spring-music-${version}.war
 EOF
+
+# path: /tmp/build/put/music-release/spring-music-${version}.war
