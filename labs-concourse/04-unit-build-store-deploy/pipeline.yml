@@ -70,3 +70,4 @@ jobs:
   - put: cf-push
     params:
       manifest: app-manifest-output/manifest.yml
+      path: music-release/spring-music-*.war 
