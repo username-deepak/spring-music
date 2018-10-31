@@ -13,4 +13,8 @@ You should notice the new resource type `cf`.  This is another built-in resource
 
 # Extra Credit
 
-Modify the cf job to add an environment variable.
+Modify the `cf` job to add an environment variable using the version information.
+
+# Extra Extra Extra Credit
+
+Add a task to the deployment that smoke tests the application after the `cf push`.

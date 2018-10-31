@@ -1,4 +1,4 @@
-# Lab 0
+# Lab 0 - Hello World
 
 The purpose of this lab is to introduce you to the `fly` CLI and verfy that you can connect and issue commands to your instance of Concourse.
 
@@ -55,8 +55,8 @@ Finished Early?
 
 Using the `fly` command line, trigger the hello-world-job.
 
-If you are successfuly with this, look at the outpit in the UI.  Notice the difference?  Why is that?
+If you are successfuly with this, look at the output in the UI.  Notice the difference?  Why is that?
 
 ## Extra Extra Credit
 
-Change the output of the hello-world-job to print your name.
+Change the output of the hello-world-job to print your own name.
